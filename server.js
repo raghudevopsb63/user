@@ -244,20 +244,38 @@ redisClient.on('ready', (r) => {
 });
 
 // set up Mongo
+//function mongoConnect() {
+//    return new Promise((resolve, reject) => {
+//        var mongoURL = process.env.MONGO_URL || 'mongodb://mongodb:27017/users';
+//        mongoClient.connect(mongoURL, (error, client) => {
+//            if(error) {
+//                reject(error);
+//            } else {
+//                db = client.db('users');
+//                usersCollection = db.collection('users');
+//                ordersCollection = db.collection('orders');
+//                resolve('connected');
+//            }
+//        });
+//    });
+//}
+
 function mongoConnect() {
     return new Promise((resolve, reject) => {
-        var mongoURL = process.env.MONGO_URL || 'mongodb://mongodb:27017/users';
-        mongoClient.connect(mongoURL, (error, client) => {
-            if(error) {
-                reject(error);
-            } else {
-                db = client.db('users');
-                usersCollection = db.collection('users');
-                ordersCollection = db.collection('orders');
-                resolve('connected');
-            }
-        });
-    });
+    var mongoURL = process.env.MONGO_URL || 'mongodb://username:password@mongodb:27017/catalogue?tls=true&replicaSet=rs0&readPreference=secondaryPreferred&retryWrites=false';
+    var client = mongoClient.connect(mongoURL,
+      {
+        tlsCAFile: `/home/roboshop/catalogue/rds-combined-ca-bundle.pem` //Specify the DocDB; cert
+    }, (error, client) => {
+    if(error) {
+        reject(error);
+    } else {
+        db = client.db('catalogue');
+        collection = db.collection('products');
+        resolve('connected');
+    }
+});
+});
 }
 
 function mongoLoop() {
