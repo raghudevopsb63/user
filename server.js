@@ -270,8 +270,9 @@ function mongoConnect() {
     if(error) {
         reject(error);
     } else {
-        db = client.db('catalogue');
-        collection = db.collection('products');
+        db = client.db('users');
+        usersCollection = db.collection('users');
+        ordersCollection = db.collection('orders');
         resolve('connected');
     }
 });
