@@ -10,5 +10,6 @@ module "user" {
   APP_VERSION         = var.APP_VERSION
   LB_TYPE             = "internal"
   APP_TYPE            = var.APP_TYPE
+  PROMETHEUS_IP       = var.PROMETHEUS_IP
 }
 
